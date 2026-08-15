@@ -1,11 +1,11 @@
 # Transcription IA - 🎙️
-* É uma ferramenta de linha de comando que transcreve vídeos do YouTube automaticamente: você passa apenas a URL do vídeo e ela baixa o áudio em mp3 (yt-dlp), transcreve com IA rodando 100% local (Whisper, com aceleração por GPU e fallback para CPU) e organiza tudo em pastas — cada vídeo vira uma subpasta com o `.mp3` e o `.txt` da transcrição, com barras de progresso e tempo de cada etapa direto no terminal 😁.
+* É uma ferramenta de linha de comando que transcreve vídeos do YouTube automaticamente: você passa apenas a URL do vídeo e ela baixa o áudio em mp3 (yt-dlp), transcreve com IA rodando 100% local (Whisper, com aceleração por GPU e fallback para CPU) e organiza tudo em pastas: cada vídeo vira uma subpasta com o `.mp3` e o `.txt` da transcrição, com barras de progresso e tempo de cada etapa direto no terminal 😁.
 
 <br>
 
 ## ✨ Funcionalidades
 
-* Transcrição 100% local — nada é enviado para servidores externos
+* Transcrição 100% local, nada é enviado para servidores externos
 * Aceleração por GPU (NVIDIA/CUDA) com fallback automático para CPU
 * Barras de progresso por etapa (download e transcrição) e tempo total ao final
 * Detecção automática de idioma (ou forçado com `-l pt`)
@@ -25,10 +25,10 @@
 
 Bibliotecas Python (instaladas via `requirements.txt`):
 
-* **yt-dlp** — download do áudio dos vídeos
-* **faster-whisper** — transcrição com o modelo Whisper otimizado
-* **rich** — barras de progresso e interface do terminal
-* **nvidia-cublas-cu12 / nvidia-cudnn-cu12** — bibliotecas CUDA para usar a GPU (opcional; sem GPU o script usa a CPU)
+* **yt-dlp**: download do áudio dos vídeos
+* **faster-whisper**: transcrição com o modelo Whisper otimizado
+* **rich**: barras de progresso e interface do terminal
+* **nvidia-cublas-cu12 / nvidia-cudnn-cu12**: bibliotecas CUDA para usar a GPU (opcional; sem GPU o script usa a CPU)
 
 <br>
 
