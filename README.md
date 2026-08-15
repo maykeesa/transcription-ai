@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.png" width="160" alt="Logo do Transcription IA"/>
+</p>
+
 # Transcription IA - 🎙️
 * É uma ferramenta de linha de comando que transcreve vídeos do YouTube automaticamente: você passa apenas a URL do vídeo e ela baixa o áudio em mp3 (yt-dlp), transcreve com IA rodando 100% local (Whisper, com aceleração por GPU e fallback para CPU) e organiza tudo em pastas: cada vídeo vira uma subpasta com o `.mp3` e o `.txt` da transcrição, com barras de progresso e tempo de cada etapa direto no terminal.
 
