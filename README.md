@@ -1,9 +1,9 @@
 # Transcription IA - 🎙️
-* É uma ferramenta de linha de comando que transcreve vídeos do YouTube automaticamente: você passa apenas a URL do vídeo e ela baixa o áudio em mp3 (yt-dlp), transcreve com IA rodando 100% local (Whisper, com aceleração por GPU e fallback para CPU) e organiza tudo em pastas: cada vídeo vira uma subpasta com o `.mp3` e o `.txt` da transcrição, com barras de progresso e tempo de cada etapa direto no terminal 😁.
+* É uma ferramenta de linha de comando que transcreve vídeos do YouTube automaticamente: você passa apenas a URL do vídeo e ela baixa o áudio em mp3 (yt-dlp), transcreve com IA rodando 100% local (Whisper, com aceleração por GPU e fallback para CPU) e organiza tudo em pastas: cada vídeo vira uma subpasta com o `.mp3` e o `.txt` da transcrição, com barras de progresso e tempo de cada etapa direto no terminal.
 
 <br>
 
-## ✨ Funcionalidades
+## Funcionalidades
 
 * Transcrição 100% local, nada é enviado para servidores externos
 * Aceleração por GPU (NVIDIA/CUDA) com fallback automático para CPU
@@ -15,7 +15,7 @@
 
 <br>
 
-## 📦 Dependências
+## Dependências
 
 | Dependência | Para quê | Instalação |
 |---|---|---|
@@ -32,7 +32,7 @@ Bibliotecas Python (instaladas via `requirements.txt`):
 
 <br>
 
-## 🚀 Como instalar
+## Como instalar
 
 ```bash
 # 1. Clone o repositório
@@ -47,11 +47,11 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-> 💡 No Windows, instale o ffmpeg e o Node com `winget install ffmpeg` e `winget install OpenJS.NodeJS.LTS`, e ative o venv com `.venv\Scripts\activate`.
+> No Windows, instale o ffmpeg e o Node com `winget install ffmpeg` e `winget install OpenJS.NodeJS.LTS`, e ative o venv com `.venv\Scripts\activate`.
 
 <br>
 
-## 💻 Como usar
+## Como usar
 
 ```bash
 # Básico: só passar a URL (idioma detectado automaticamente)
@@ -73,10 +73,10 @@ Todas as opções: `python3 transcribe.py --help`
 
 | Modelo (`-m`) | Velocidade | Precisão |
 |---|---|---|
-| `tiny` / `base` | ⚡ muito rápido | básica |
-| `small` *(padrão)* | 🚀 rápido | boa |
-| `medium` | 🐢 mais lento | ótima |
-| `large-v3` / `turbo` | 🐢/🚀 | excelente (pede GPU forte) |
+| `tiny` / `base` | muito rápido | básica |
+| `small` *(padrão)* | rápido | boa |
+| `medium` | mais lento | ótima |
+| `large-v3` / `turbo` | lento / rápido | excelente (pede GPU forte) |
 
 <br>
 
