@@ -79,24 +79,48 @@ def format_elapsed(seconds: float) -> str:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Transcribe YouTube videos with yt-dlp + Whisper")
-    parser.add_argument("url", help="YouTube video URL")
+    parser = argparse.ArgumentParser(
+        description="Transcribe YouTube videos with yt-dlp + Whisper.\n"
+        "Downloads the audio as mp3 and writes the transcript next to it,\n"
+        "both inside transcriptions/<video title>/.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "models (--model):\n"
+            "  tiny, base   fastest, lower accuracy\n"
+            "  small        good balance (default)\n"
+            "  medium       more accurate, slower, bigger download\n"
+            "  large-v3     best accuracy, needs a strong GPU\n"
+            "  turbo        near large-v3 accuracy, much faster\n"
+            "\n"
+            "examples:\n"
+            '  python3 transcribe.py "https://www.youtube.com/watch?v=VIDEO_ID"\n'
+            '  python3 transcribe.py "URL" -l pt\n'
+            '  python3 transcribe.py "URL" -m medium -l pt\n'
+            '  python3 transcribe.py "URL" -v\n'
+            '  nice -n 19 python3 transcribe.py "URL"   # low priority, keeps the PC responsive\n'
+        ),
+    )
+    parser.add_argument("url", help="YouTube video URL (wrap it in quotes)")
     parser.add_argument(
+        "-m",
         "--model",
         default="small",
         choices=MODEL_CHOICES,
-        help="Whisper model (default: small; bigger = more accurate, slower)",
+        metavar="MODEL",
+        help=f"Whisper model: {', '.join(MODEL_CHOICES)} (default: small)",
     )
     parser.add_argument(
+        "-l",
         "--language",
         default=None,
-        help="Language code, e.g. pt, en (default: auto-detect)",
+        metavar="LANG",
+        help="language code, e.g. pt, en (default: auto-detect)",
     )
     parser.add_argument(
         "-v",
         "--verbose",
         action="store_true",
-        help="Stream yt-dlp logs live instead of only writing them to the log file",
+        help="stream yt-dlp logs live instead of only writing them to the log file",
     )
     args = parser.parse_args()
     # Strip escape backslashes that shells sometimes leave in pasted URLs.
