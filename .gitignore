@@ -1,0 +1,16 @@
+# Outputs
+transcriptions/
+logs/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Editor / tooling
+.vscode/
+.claude/
+
+# Misc
+*.tmp
+*.log
