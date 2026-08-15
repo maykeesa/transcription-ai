@@ -35,11 +35,16 @@ def _write_transcript(
     tmp_path = txt_path.with_suffix(txt_path.suffix + ".tmp")
     duration = info.duration or 0.0
 
-    with tmp_path.open("w", encoding="utf-8") as file:
-        for segment in segments:
-            file.write(segment.text.strip() + "\n")
-            if duration > 0 and on_progress:
-                on_progress(min(segment.end, duration), duration)
+    try:
+        with tmp_path.open("w", encoding="utf-8") as file:
+            for segment in segments:
+                file.write(segment.text.strip() + "\n")
+                if duration > 0 and on_progress:
+                    on_progress(min(segment.end, duration), duration)
+    except BaseException:
+        # Interrupted or failed midway: drop the partial file.
+        tmp_path.unlink(missing_ok=True)
+        raise
     if duration > 0 and on_progress:
         on_progress(duration, duration)
 

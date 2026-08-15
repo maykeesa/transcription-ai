@@ -151,4 +151,8 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        console.print("\n[yellow]Cancelled by user[/]")
+        sys.exit(130)
