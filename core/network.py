@@ -2,7 +2,6 @@ import socket
 
 
 def force_ipv4() -> None:
-    """On this network IPv6 connections hang forever; force IPv4 for the whole process."""
     original = socket.getaddrinfo
 
     def ipv4_only(*args, **kwargs):
