@@ -3,7 +3,7 @@
 
 <br>
 
-## Funcionalidades
+## ✨ Funcionalidades
 
 * Transcrição 100% local, nada é enviado para servidores externos
 * Aceleração por GPU (NVIDIA/CUDA) com fallback automático para CPU
@@ -15,7 +15,7 @@
 
 <br>
 
-## Dependências
+## 📦 Dependências
 
 | Dependência | Para quê | Instalação |
 |---|---|---|
@@ -32,7 +32,7 @@ Bibliotecas Python (instaladas via `requirements.txt`):
 
 <br>
 
-## Como instalar
+## 🚀 Como instalar
 
 ```bash
 # 1. Clone o repositório
@@ -51,7 +51,7 @@ pip install -r requirements.txt
 
 <br>
 
-## Como usar
+## 💻 Como usar
 
 ```bash
 # Básico: só passar a URL (idioma detectado automaticamente)
