@@ -20,10 +20,11 @@ console = Console()
 def _new_progress() -> Progress:
     return Progress(
         TextColumn("[progress.description]{task.description}"),
-        BarColumn(),
+        BarColumn(bar_width=30),
         TaskProgressColumn(),
         TimeRemainingColumn(),
         console=console,
+        transient=True,
     )
 
 
