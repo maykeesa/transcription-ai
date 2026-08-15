@@ -42,13 +42,11 @@ def _write_transcript(
                 if duration > 0 and on_progress:
                     on_progress(min(segment.end, duration), duration)
     except BaseException:
-        # Interrupted or failed midway: drop the partial file.
         tmp_path.unlink(missing_ok=True)
         raise
     if duration > 0 and on_progress:
         on_progress(duration, duration)
 
-    # Rename is atomic: the .txt either exists complete or not at all.
     os.replace(tmp_path, txt_path)
 
 
@@ -59,10 +57,6 @@ def transcribe_audio(
     on_status: Callable[[str], None] | None = None,
     on_progress: Callable[[float, float], None] | None = None,
 ) -> Path:
-    """Transcribe an mp3 with faster-whisper (GPU first, CPU fallback) and return the .txt path.
-
-    on_status receives human-readable status messages; on_progress receives (seconds_done, total_seconds).
-    """
     txt_path = mp3_path.with_suffix(".txt")
 
     _load_cuda_libs()
