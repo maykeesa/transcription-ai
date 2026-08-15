@@ -92,12 +92,6 @@ def main() -> None:
             "  large-v3     best accuracy, needs a strong GPU\n"
             "  turbo        near large-v3 accuracy, much faster\n"
             "\n"
-            "examples:\n"
-            '  python3 transcribe.py "https://www.youtube.com/watch?v=VIDEO_ID"\n'
-            '  python3 transcribe.py "URL" -l pt\n'
-            '  python3 transcribe.py "URL" -m medium -l pt\n'
-            '  python3 transcribe.py "URL" -v\n'
-            '  nice -n 19 python3 transcribe.py "URL"   # low priority, keeps the PC responsive\n'
         ),
     )
     parser.add_argument("url", help="YouTube video URL (wrap it in quotes)")
@@ -123,7 +117,6 @@ def main() -> None:
         help="stream yt-dlp logs live instead of only writing them to the log file",
     )
     args = parser.parse_args()
-    # Strip escape backslashes that shells sometimes leave in pasted URLs.
     url = args.url.replace("\\", "")
 
     force_ipv4()
@@ -138,6 +131,7 @@ def main() -> None:
         console.print(f"[red]Video download failed: {error}[/]")
         console.print(f"[dim]Full yt-dlp log: {log_buffer.dump(LOGS_DIR)}[/]")
         sys.exit(1)
+
     download_elapsed = time.monotonic() - started
     console.print(f"[green]✓[/] Audio saved: {mp3_path} [dim]({format_elapsed(download_elapsed)})[/]")
 
