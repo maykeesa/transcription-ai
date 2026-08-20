@@ -35,48 +35,84 @@ Bibliotecas Python (instaladas via `requirements.txt`):
 * **yt-dlp**: download do áudio dos vídeos
 * **faster-whisper**: transcrição com o modelo Whisper otimizado
 * **rich**: barras de progresso e interface do terminal
-* **nvidia-cublas-cu12 / nvidia-cudnn-cu12**: bibliotecas CUDA para usar a GPU (opcional; sem GPU o script usa a CPU)
+* **nvidia-cublas-cu12 / nvidia-cudnn-cu12 / nvidia-cuda-runtime-cu12**: bibliotecas CUDA para usar a GPU (opcional; sem GPU o script usa a CPU)
 
 <br>
 
 ## 🚀 Como instalar
 
+**Linux**
+
 ```bash
-# 1. Clone o repositório
+# 1. Dependências do sistema
+sudo apt install ffmpeg nodejs
+
+# 2. Clone o repositório
 git clone https://github.com/MaykeESA/transcription-ia.git
 cd transcription-ia
 
-# 2. Crie um ambiente virtual (recomendado)
+# 3. Crie o ambiente virtual e instale as bibliotecas
 python3 -m venv .venv
-source .venv/bin/activate
-
-# 3. Instale as dependências Python
-pip install -r requirements.txt
+.venv/bin/python -m pip install -r requirements.txt
 ```
 
-> No Windows, instale o ffmpeg e o Node com `winget install ffmpeg` e `winget install OpenJS.NodeJS.LTS`, e ative o venv com `.venv\Scripts\activate`.
+**Windows**
+
+```powershell
+# 1. Dependências do sistema
+winget install ffmpeg
+winget install OpenJS.NodeJS.LTS
+
+# 2. Clone o repositório
+git clone https://github.com/MaykeESA/transcription-ia.git
+cd transcription-ia
+
+# 3. Crie o ambiente virtual e instale as bibliotecas
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+> Chamar o interpretador do venv pelo caminho dispensa ativar o ambiente. Se preferir ativar para encurtar os comandos, use `source .venv/bin/activate` no Linux ou `.venv\Scripts\Activate.ps1` no PowerShell — este último exige liberar scripts uma vez com `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
 
 <br>
 
 ## 💻 Como usar
 
+**Linux**
+
 ```bash
 # Básico: só passar a URL (idioma detectado automaticamente)
-python3 transcribe.py "https://www.youtube.com/watch?v=VIDEO_ID"
+.venv/bin/python transcribe.py "https://www.youtube.com/watch?v=VIDEO_ID"
 
 # Forçando português
-python3 transcribe.py "URL" -l pt
+.venv/bin/python transcribe.py "URL" -l pt
 
 # Modelo mais preciso
-python3 transcribe.py "URL" -m medium -l pt
+.venv/bin/python transcribe.py "URL" -m medium -l pt
 
 # Vídeos longos: prioridade baixa, PC continua responsivo
-nice -n 19 python3 transcribe.py "URL" -l pt
+nice -n 19 .venv/bin/python transcribe.py "URL" -l pt
+```
+
+**Windows**
+
+```powershell
+# Básico: só passar a URL (idioma detectado automaticamente)
+.venv\Scripts\python.exe transcribe.py "https://www.youtube.com/watch?v=VIDEO_ID"
+
+# Forçando português
+.venv\Scripts\python.exe transcribe.py "URL" -l pt
+
+# Modelo mais preciso
+.venv\Scripts\python.exe transcribe.py "URL" -m medium -l pt
+
+# Redes onde o IPv6 está quebrado
+.venv\Scripts\python.exe transcribe.py "URL" -l pt --force-ipv4
 ```
 
 O resultado fica em `transcriptions/<título do vídeo>/` com o `.mp3` e o `.txt` juntos.
 
-Todas as opções: `python3 transcribe.py --help`
+Todas as opções: `transcribe.py --help`
 
 | Modelo (`-m`) | Velocidade | Precisão |
 |---|---|---|
