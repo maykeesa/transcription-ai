@@ -97,6 +97,16 @@ def main() -> None:
             "  large-v3     best accuracy, needs a strong GPU\n"
             "  turbo        near large-v3 accuracy, much faster\n"
             "\n"
+            "languages (--language), most common of the 100 supported:\n"
+            "  pt  Portuguese    en  English      es  Spanish\n"
+            "  fr  French        de  German       it  Italian\n"
+            "  ja  Japanese      ko  Korean       zh  Chinese\n"
+            "  ru  Russian       ar  Arabic       hi  Hindi\n"
+            "\n"
+            "  Omitting it auto-detects from the first 30 seconds, which can miss\n"
+            "  on strong accents (Portuguese is often taken for Spanish). Pass the\n"
+            "  code when you know the language.\n"
+            "\n"
         ),
     )
     parser.add_argument("url", help="YouTube video URL (wrap it in quotes)")
@@ -113,7 +123,7 @@ def main() -> None:
         "--language",
         default=None,
         metavar="LANG",
-        help="language code, e.g. pt, en (default: auto-detect)",
+        help="language code, e.g. pt, en (default: auto-detect; see the list below)",
     )
     parser.add_argument(
         "-v",
