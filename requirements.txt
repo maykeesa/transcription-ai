@@ -1,6 +1,7 @@
 yt-dlp
 faster-whisper
 rich
+
 nvidia-cublas-cu12
-nvidia-cudnn-cu12==9.*
+nvidia-cudnn-cu12
 nvidia-cuda-runtime-cu12

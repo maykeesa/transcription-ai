@@ -12,15 +12,15 @@ MODEL_CHOICES = ["tiny", "base", "small", "medium", "large-v3", "turbo"]
 
 
 WINDOWS_CUDA_LIBS = (
-    ("cuda_runtime", "cudart64_12.dll"),
-    ("cublas", "cublasLt64_12.dll"),
-    ("cublas", "cublas64_12.dll"),
-    ("cudnn", "cudnn64_9.dll"),
+    ("cuda_runtime", "bin", "cudart64_*.dll"),
+    ("cublas", "bin", "cublasLt64_*.dll"),
+    ("cublas", "bin", "cublas64_*.dll"),
+    ("cudnn", "bin", "cudnn64_*.dll"),
 )
 
 LINUX_CUDA_LIBS = (
-    ("cublas", "libcublas.so.12"),
-    ("cudnn", "libcudnn.so.9"),
+    ("cublas", "lib", "libcublas.so.*"),
+    ("cudnn", "lib", "libcudnn.so.*"),
 )
 
 
@@ -34,18 +34,16 @@ def _load_cuda_libs() -> None:
     base = Path(list(spec.submodule_search_locations)[0])
 
     if platform.system() == "Windows":
-        for package, name in WINDOWS_CUDA_LIBS:
-            lib = base / package / "bin" / name
-            if lib.exists():
+        for package, folder, pattern in WINDOWS_CUDA_LIBS:
+            for lib in sorted((base / package / folder).glob(pattern)):
                 try:
                     ctypes.WinDLL(str(lib))
                 except OSError:
                     pass
         return
 
-    for package, name in LINUX_CUDA_LIBS:
-        lib = base / package / "lib" / name
-        if lib.exists():
+    for package, folder, pattern in LINUX_CUDA_LIBS:
+        for lib in sorted((base / package / folder).glob(pattern)):
             try:
                 ctypes.CDLL(str(lib), mode=ctypes.RTLD_GLOBAL)
             except OSError:
