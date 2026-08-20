@@ -1,7 +1,7 @@
 import socket
 
 
-def force_ipv4() -> None:
+def force_ipv4_resolution() -> None:
     original = socket.getaddrinfo
 
     def ipv4_only(*args, **kwargs):

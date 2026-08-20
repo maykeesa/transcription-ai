@@ -54,6 +54,7 @@ def download_mp3(
     output_dir: Path,
     log_buffer: YtdlpLogBuffer | None = None,
     progress_hook: Callable[[dict], None] | None = None,
+    force_ipv4: bool = False,
 ) -> Path:
     options = {
         "quiet": True,
@@ -61,7 +62,6 @@ def download_mp3(
         "js_runtimes": {"node": {}},
         "remote_components": ["ejs:github"],
         "extractor_args": {"youtube": {"player_client": ["default", "-android_vr"]}},
-        "source_address": "0.0.0.0",
         "noplaylist": True,
         "format": "bestaudio/best",
         "outtmpl": str(output_dir / "%(title)s" / "%(title)s.%(ext)s"),
@@ -73,6 +73,8 @@ def download_mp3(
             }
         ],
     }
+    if force_ipv4:
+        options["source_address"] = "0.0.0.0"
     if log_buffer is not None:
         options["logger"] = log_buffer
     if progress_hook is not None:
@@ -99,10 +101,11 @@ def download_mp3_with_retry(
     log_buffer: YtdlpLogBuffer | None = None,
     progress_hook: Callable[[dict], None] | None = None,
     on_retry: Callable[[int, int], None] | None = None,
+    force_ipv4: bool = False,
 ) -> Path:
     for attempt in range(1, DOWNLOAD_ATTEMPTS + 1):
         try:
-            return download_mp3(url, output_dir, log_buffer, progress_hook)
+            return download_mp3(url, output_dir, log_buffer, progress_hook, force_ipv4)
         except DownloadError as error:
             transient = any(marker in str(error).lower() for marker in TRANSIENT_ERROR_MARKERS)
             if not transient or attempt == DOWNLOAD_ATTEMPTS:

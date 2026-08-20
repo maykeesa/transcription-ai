@@ -11,7 +11,7 @@ from rich.console import Console
 from rich.progress import BarColumn, Progress, TaskProgressColumn, TextColumn, TimeRemainingColumn
 
 from core.downloader import DownloadError, YtdlpLogBuffer, download_mp3_with_retry
-from core.network import force_ipv4
+from core.network import force_ipv4_resolution
 from core.transcriber import MODEL_CHOICES, transcribe_audio
 
 PROJECT_DIR = Path(__file__).parent
@@ -32,7 +32,7 @@ def _new_progress() -> Progress:
     )
 
 
-def _run_download(url: str, log_buffer: YtdlpLogBuffer) -> Path:
+def _run_download(url: str, log_buffer: YtdlpLogBuffer, force_ipv4: bool) -> Path:
     progress = _new_progress()
     task_id = None
 
@@ -52,7 +52,7 @@ def _run_download(url: str, log_buffer: YtdlpLogBuffer) -> Path:
         progress.console.print(f"[yellow]Download failed (attempt {attempt}/{attempts}), retrying...[/]")
 
     with progress:
-        return download_mp3_with_retry(url, OUTPUT_DIR, log_buffer, hook, on_retry)
+        return download_mp3_with_retry(url, OUTPUT_DIR, log_buffer, hook, on_retry, force_ipv4)
 
 
 def _run_transcription(mp3_path: Path, model_name: str, language: str | None) -> Path:
@@ -130,14 +130,14 @@ def main() -> None:
     url = args.url.replace("\\", "")
 
     if args.force_ipv4:
-        force_ipv4()
+        force_ipv4_resolution()
     echo = (lambda line: console.print(f"[dim]{line}[/]", highlight=False)) if args.verbose else None
     log_buffer = YtdlpLogBuffer(echo=echo)
     started = time.monotonic()
 
     console.rule("[bold]Step 1/2 · Download (yt-dlp)")
     try:
-        mp3_path = _run_download(url, log_buffer)
+        mp3_path = _run_download(url, log_buffer, args.force_ipv4)
     except DownloadError as error:
         console.print(f"[red]Video download failed: {error}[/]")
         console.print(f"[dim]Full yt-dlp log: {log_buffer.dump(LOGS_DIR)}[/]")
