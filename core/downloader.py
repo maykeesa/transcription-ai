@@ -53,6 +53,7 @@ def download_mp3(
         "noprogress": True,
         "js_runtimes": {"node": {}},
         "remote_components": ["ejs:github"],
+        "extractor_args": {"youtube": {"player_client": ["default", "-android_vr"]}},
         "source_address": "0.0.0.0",
         "noplaylist": True,
         "format": "bestaudio/best",
