@@ -8,7 +8,14 @@ import yt_dlp
 DOWNLOAD_ATTEMPTS = 3
 RETRY_WAIT_SECONDS = 10
 MP3_QUALITY = "192"
-TRANSIENT_ERROR_MARKERS = ("403", "timed out", "timeout", "connection", "temporary")
+TRANSIENT_ERROR_MARKERS = (
+    "403",
+    "timed out",
+    "timeout",
+    "connection",
+    "temporary",
+    "requested format is not available",
+)
 
 DownloadError = yt_dlp.utils.DownloadError
 
