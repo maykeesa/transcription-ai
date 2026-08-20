@@ -1,13 +1,22 @@
 # TODO — transcription-ia
 
-## Prioridade
-- [ ] **UI simples** (web local, ex.: Gradio ou Flask):
+## Interface
+- [ ] **UI web local** (Gradio ou Flask):
   - [ ] Campo para colar o link do YouTube
-  - [ ] Barra de progresso em tempo real até 100% (download + transcrição)
-  - [ ] Seletor do local de output (hoje fixo em `transcriptions/`)
+  - [ ] Barra de progresso em tempo real, até 100% (download + transcrição)
   - [ ] Seletor do modelo Whisper (tiny/base/small/medium/large-v3/turbo)
-- [ ] **Tempo na UI**: mostrar duração total também na futura UI web (no terminal já feito)
-- [ ] Pular transcrição se o `.txt` já existir (hoje só pula o download do mp3)
-- [ ] Rodar com prioridade baixa (`nice`) automaticamente de dentro do script, vê solução para o windows
-- [ ] Detectar CPU, GPU/VRAM e RAM disponível e sugerir/escolher o modelo compatível sozinho
-- [ ] Suporte a arquivo de áudio/vídeo local (sem YouTube)
+  - [ ] Seletor do local de saída (hoje fixo em `transcriptions/`)
+  - [ ] Duração total ao final (já existe no terminal)
+
+## Compatibilidade
+- [ ] Suporte a GPUs não-NVIDIA (AMD, Intel Arc, Apple Silicon) — o CTranslate2
+      aceita apenas `cpu` e `cuda`, então exige trocar a engine de transcrição
+      por whisper.cpp, que suporta ROCm, Vulkan e Metal
+- [ ] Rodar com prioridade baixa automaticamente, de dentro do script — `nice` no
+      Linux e equivalente no Windows
+
+## Funcionalidades
+- [ ] Suporte a arquivo de áudio/vídeo local, sem YouTube
+- [ ] Pular a transcrição se o `.txt` já existir (hoje só pula o download do mp3)
+- [ ] Detectar CPU, GPU/VRAM e RAM disponíveis e sugerir ou escolher sozinho o
+      modelo compatível

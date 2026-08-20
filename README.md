@@ -72,7 +72,7 @@ python -m venv .venv
 .venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-> Chamar o interpretador do venv pelo caminho dispensa ativar o ambiente. Se preferir ativar para encurtar os comandos, use `source .venv/bin/activate` no Linux ou `.venv\Scripts\Activate.ps1` no PowerShell — este último exige liberar scripts uma vez com `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
+> Chamar o interpretador do venv pelo caminho dispensa ativar o ambiente. Se preferir ativar para encurtar os comandos, use `source .venv/bin/activate` no Linux ou `.venv\Scripts\Activate.ps1` no PowerShell, este último exige liberar scripts uma vez com `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
 
 <br>
 
@@ -123,21 +123,6 @@ Todas as opções: `transcribe.py --help`
 
 <br>
 
-## 🤝 Colaboradores
+## 📄 Licença
 
-Agradecemos às seguintes pessoas que contribuíram para este projeto:
-
-<table>
-  <tr>
-    <td align="center">
-      <a href="#">
-        <a href="https://github.com/MaykeESA">
-          <img src="https://avatars.githubusercontent.com/u/81484737?v=4" width="100px;" alt="Foto do Mayke Erick no GitHub"/><br>
-        </a>
-        <sub>
-          <b>Mayke Erick</b>
-        </sub>
-      </a>
-    </td>
-  </tr>
-</table>
+Distribuído sob a licença [MIT](LICENSE): uso livre, inclusive comercial, desde que o aviso de copyright seja mantido. O software é fornecido sem garantias.
