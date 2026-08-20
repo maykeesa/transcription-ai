@@ -1,4 +1,5 @@
 import os
+import platform
 from collections.abc import Callable, Iterable
 from pathlib import Path
 
@@ -11,13 +12,24 @@ MODEL_CHOICES = ["tiny", "base", "small", "medium", "large-v3", "turbo"]
 
 
 def _load_cuda_libs() -> None:
-    import ctypes
     import importlib.util
 
     spec = importlib.util.find_spec("nvidia")
     if spec is None or not spec.submodule_search_locations:
         return
     base = Path(list(spec.submodule_search_locations)[0])
+
+    if platform.system() == "Windows":
+        for bin_dir in (base / "cublas" / "bin", base / "cudnn" / "bin"):
+            if bin_dir.is_dir():
+                try:
+                    os.add_dll_directory(str(bin_dir))
+                except OSError:
+                    pass
+        return
+
+    import ctypes
+
     for lib in (base / "cublas" / "lib" / "libcublas.so.12", base / "cudnn" / "lib" / "libcudnn.so.9"):
         if lib.exists():
             try:
