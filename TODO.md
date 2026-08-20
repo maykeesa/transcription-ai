@@ -1,7 +1,6 @@
 # TODO — transcription-ia
 
 ## Prioridade
-- [ ] **Escolha de IPv4/IPv6**: opção `--ipv6` (ou detecção automática testando a conexão) em vez do IPv4 forçado no código — hoje o script assume que IPv6 está quebrado nesta rede
 - [ ] **UI simples** (web local, ex.: Gradio ou Flask):
   - [ ] Campo para colar o link do YouTube
   - [ ] Barra de progresso em tempo real até 100% (download + transcrição)

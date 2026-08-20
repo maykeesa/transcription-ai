@@ -117,10 +117,16 @@ def main() -> None:
         action="store_true",
         help="stream yt-dlp logs live instead of only writing them to the log file",
     )
+    parser.add_argument(
+        "--force-ipv4",
+        action="store_true",
+        help="force IPv4 connections, useful when IPv6 is broken on your network (e.g. some Wi-Fi networks)",
+    )
     args = parser.parse_args()
     url = args.url.replace("\\", "")
 
-    force_ipv4()
+    if args.force_ipv4:
+        force_ipv4()
     echo = (lambda line: console.print(f"[dim]{line}[/]", highlight=False)) if args.verbose else None
     log_buffer = YtdlpLogBuffer(echo=echo)
     started = time.monotonic()
