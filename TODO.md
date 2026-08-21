@@ -1,4 +1,4 @@
-# TODO — transcription-ia
+# TODO — transcription-ai
 
 ## Interface
 - [ ] **UI web local** (Gradio ou Flask):
