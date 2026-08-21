@@ -52,6 +52,7 @@ class YtdlpLogBuffer:
 def download_mp3(
     url: str,
     output_dir: Path,
+    *,
     log_buffer: YtdlpLogBuffer | None = None,
     progress_hook: Callable[[dict], None] | None = None,
     force_ipv4: bool = False,
@@ -98,6 +99,7 @@ def download_mp3(
 def download_mp3_with_retry(
     url: str,
     output_dir: Path,
+    *,
     log_buffer: YtdlpLogBuffer | None = None,
     progress_hook: Callable[[dict], None] | None = None,
     on_retry: Callable[[int, int], None] | None = None,
@@ -105,7 +107,13 @@ def download_mp3_with_retry(
 ) -> Path:
     for attempt in range(1, DOWNLOAD_ATTEMPTS + 1):
         try:
-            return download_mp3(url, output_dir, log_buffer, progress_hook, force_ipv4)
+            return download_mp3(
+                url,
+                output_dir,
+                log_buffer=log_buffer,
+                progress_hook=progress_hook,
+                force_ipv4=force_ipv4,
+            )
         except DownloadError as error:
             transient = any(marker in str(error).lower() for marker in TRANSIENT_ERROR_MARKERS)
             if not transient or attempt == DOWNLOAD_ATTEMPTS:

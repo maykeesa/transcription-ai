@@ -3,10 +3,6 @@ import sys
 import time
 from pathlib import Path
 
-if sys.platform == "win32":
-    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
-
 from rich.console import Console
 from rich.progress import BarColumn, Progress, TaskProgressColumn, TextColumn, TimeRemainingColumn
 
@@ -17,6 +13,10 @@ from core.transcriber import MODEL_CHOICES, transcribe_audio
 PROJECT_DIR = Path(__file__).parent
 OUTPUT_DIR = PROJECT_DIR / "transcriptions"
 LOGS_DIR = PROJECT_DIR / "logs"
+
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 console = Console()
 
@@ -52,7 +52,14 @@ def _run_download(url: str, log_buffer: YtdlpLogBuffer, force_ipv4: bool) -> Pat
         progress.console.print(f"[yellow]Download failed (attempt {attempt}/{attempts}), retrying...[/]")
 
     with progress:
-        return download_mp3_with_retry(url, OUTPUT_DIR, log_buffer, hook, on_retry, force_ipv4)
+        return download_mp3_with_retry(
+            url,
+            OUTPUT_DIR,
+            log_buffer=log_buffer,
+            progress_hook=hook,
+            on_retry=on_retry,
+            force_ipv4=force_ipv4,
+        )
 
 
 def _run_transcription(mp3_path: Path, model_name: str, language: str | None) -> Path:
@@ -70,7 +77,17 @@ def _run_transcription(mp3_path: Path, model_name: str, language: str | None) ->
         progress.console.print(f"[yellow]{message}[/]")
 
     with progress:
-        return transcribe_audio(mp3_path, model_name, language, on_status, on_progress)
+        return transcribe_audio(
+            mp3_path,
+            model_name,
+            language=language,
+            on_status=on_status,
+            on_progress=on_progress,
+        )
+
+
+def strip_shell_escapes(url: str) -> str:
+    return url.replace("\\", "")
 
 
 def format_elapsed(seconds: float) -> str:
@@ -137,7 +154,7 @@ def main() -> None:
         help="force IPv4 connections, useful when IPv6 is broken on your network (e.g. some Wi-Fi networks)",
     )
     args = parser.parse_args()
-    url = args.url.replace("\\", "")
+    url = strip_shell_escapes(args.url)
 
     if args.force_ipv4:
         force_ipv4_resolution()

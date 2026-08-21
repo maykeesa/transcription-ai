@@ -77,6 +77,7 @@ def _write_transcript(
 def transcribe_audio(
     mp3_path: Path,
     model_name: str,
+    *,
     language: str | None = None,
     on_status: Callable[[str], None] | None = None,
     on_progress: Callable[[float, float], None] | None = None,
