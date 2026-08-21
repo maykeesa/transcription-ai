@@ -25,18 +25,15 @@ Sync `TODO.md` with the repository issues.
 
 ## Issue format
 
-The TODO is written in Portuguese; issues are written in English, like the
-commits and the CLI. Translate as you go.
-
 - **Title**: the item text, without the `- [ ]`, without markdown (`**`,
   `` ` ``) and without the explanation that follows an em dash. Short.
 - **Body**: whatever the title left out — the explanation after the em dash,
   when there is one. If the item has sub-items in the TODO, put them in the
   body as a task list (`- [ ] ...`), preserving their order.
-- **Label**: map the TODO section to its lowercase English label — Interface
-  to `interface`, Compatibilidade to `compatibility`, Funcionalidades to
-  `features`. A new section takes the same shape. Create the label first if it
-  does not exist: `gh label create "<name>" --force`.
+- **Label**: the TODO section the item belongs to, lowercased — Interface
+  becomes `interface`, Compatibility becomes `compatibility`, and so on for any
+  new section. Create the label first if it does not exist:
+  `gh label create "<name>" --force`.
 
 ## Report
 

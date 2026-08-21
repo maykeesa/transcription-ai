@@ -1,22 +1,23 @@
 # TODO — transcription-ai
 
 ## Interface
-- [ ] **UI web local** (Gradio ou Flask):
-  - [ ] Campo para colar o link do YouTube
-  - [ ] Barra de progresso em tempo real, até 100% (download + transcrição)
-  - [ ] Seletor do modelo Whisper (tiny/base/small/medium/large-v3/turbo)
-  - [ ] Seletor do local de saída (hoje fixo em `transcriptions/`)
-  - [ ] Duração total ao final (já existe no terminal)
+- [ ] **Local web UI** (Gradio or Flask):
+  - [ ] Field to paste the YouTube link
+  - [ ] Real-time progress bar, up to 100% (download + transcription)
+  - [ ] Whisper model selector (tiny/base/small/medium/large-v3/turbo)
+  - [ ] Output location selector (currently fixed at `transcriptions/`)
+  - [ ] Total elapsed time at the end (already available in the terminal)
 
-## Compatibilidade
-- [ ] Suporte a GPUs não-NVIDIA (AMD, Intel Arc, Apple Silicon) — o CTranslate2
-      aceita apenas `cpu` e `cuda`, então exige trocar a engine de transcrição
-      por whisper.cpp, que suporta ROCm, Vulkan e Metal
-- [ ] Rodar com prioridade baixa automaticamente, de dentro do script — `nice` no
-      Linux e equivalente no Windows
+## Compatibility
+- [ ] Support non-NVIDIA GPUs (AMD, Intel Arc, Apple Silicon) — CTranslate2
+      exposes only `cpu` and `cuda`, so this means replacing the transcription
+      engine with whisper.cpp, which supports ROCm, Vulkan and Metal
+- [ ] Lower the process priority automatically, from within the script — `nice`
+      on Linux and the equivalent on Windows
 
-## Funcionalidades
-- [ ] Suporte a arquivo de áudio/vídeo local, sem YouTube
-- [ ] Pular a transcrição se o `.txt` já existir (hoje só pula o download do mp3)
-- [ ] Detectar CPU, GPU/VRAM e RAM disponíveis e sugerir ou escolher sozinho o
-      modelo compatível
+## Features
+- [ ] Accept local audio and video files, without going through YouTube
+- [ ] Skip transcription when the `.txt` already exists (today only the mp3
+      download is skipped)
+- [ ] Detect the available CPU, GPU/VRAM and RAM and suggest, or pick
+      automatically, a compatible model

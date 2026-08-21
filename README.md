@@ -1,57 +1,57 @@
 <p align="center">
-  <img src="assets/logo.png" width="160" alt="Logo do TranscriptionAI"/>
+  <img src="assets/logo.png" width="160" alt="TranscriptionAI logo"/>
 </p>
 
 <h1 align="center">TranscriptionAI</h1>
 
 <p align="center">
-É uma ferramenta de linha de comando que transcreve vídeos do YouTube automaticamente: você passa apenas a URL do vídeo e ela baixa o áudio em mp3 (yt-dlp), transcreve com IA rodando 100% local (Whisper, com aceleração por GPU e fallback para CPU) e organiza tudo em pastas: cada vídeo vira uma subpasta com o <code>.mp3</code> e o <code>.txt</code> da transcrição, com barras de progresso e tempo de cada etapa direto no terminal.
+A command-line tool that transcribes YouTube videos automatically: you pass just the video URL and it downloads the audio as mp3 (yt-dlp), transcribes it with AI running fully on your machine (Whisper, GPU-accelerated with a CPU fallback) and keeps everything tidy: each video becomes a subfolder holding its <code>.mp3</code> and the <code>.txt</code> transcript, with per-step progress bars and timings right in the terminal.
 </p>
 
 <br>
 
-## ✨ Funcionalidades
+## ✨ Features
 
-* Transcrição 100% local, nada é enviado para servidores externos
-* Aceleração por GPU (NVIDIA/CUDA) com fallback automático para CPU
-* Barras de progresso por etapa (download e transcrição) e tempo total ao final
-* Detecção automática de idioma (ou forçado com `-l pt`)
-* 6 modelos Whisper à escolha, do mais rápido ao mais preciso
-* Retry automático em falhas temporárias de download
-* Logs detalhados de cada execução salvos em `logs/`
+* Fully local transcription, nothing is sent to external servers
+* GPU acceleration (NVIDIA/CUDA) with an automatic CPU fallback
+* Progress bars per step (download and transcription) and total time at the end
+* Automatic language detection (or forced with `-l pt`)
+* 6 Whisper models to choose from, from the fastest to the most accurate
+* Automatic retry on temporary download failures
+* Detailed logs of every run saved to `logs/`
 
 <br>
 
-## 📦 Dependências
+## 📦 Dependencies
 
-| Dependência | Para quê |
+| Dependency | What for |
 |---|---|
-| [Python 3.12+](https://www.python.org/downloads/) | Rodar o projeto |
-| [ffmpeg](https://ffmpeg.org/) | Converter o áudio para mp3 |
-| [Node.js](https://nodejs.org/) | Runtime JS exigido pelo yt-dlp para o YouTube |
+| [Python 3.12+](https://www.python.org/downloads/) | Running the project |
+| [ffmpeg](https://ffmpeg.org/) | Converting the audio to mp3 |
+| [Node.js](https://nodejs.org/) | JS runtime yt-dlp needs for YouTube |
 
-Bibliotecas Python (instaladas via `requirements.txt`):
+Python libraries (installed from `requirements.txt`):
 
-* **yt-dlp**: download do áudio dos vídeos
-* **faster-whisper**: transcrição com o modelo Whisper otimizado
-* **rich**: barras de progresso e interface do terminal
-* **nvidia-cublas-cu12 / nvidia-cudnn-cu12 / nvidia-cuda-runtime-cu12**: bibliotecas CUDA para usar a GPU (opcional; sem GPU o script usa a CPU)
+* **yt-dlp**: downloads the audio from the videos
+* **faster-whisper**: transcription with the optimized Whisper model
+* **rich**: progress bars and terminal interface
+* **nvidia-cublas-cu12 / nvidia-cudnn-cu12 / nvidia-cuda-runtime-cu12**: CUDA libraries for GPU support (optional; without a GPU the script uses the CPU)
 
 <br>
 
-## 🚀 Como instalar
+## 🚀 Installing
 
 **Linux**
 
 ```bash
-# 1. Dependências do sistema
+# 1. System dependencies
 sudo apt install ffmpeg nodejs
 
-# 2. Clone o repositório
+# 2. Clone the repository
 git clone https://github.com/MaykeESA/transcription-ai.git
 cd transcription-ai
 
-# 3. Crie o ambiente virtual e instale as bibliotecas
+# 3. Create the virtual environment and install the libraries
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
 ```
@@ -59,70 +59,70 @@ python3 -m venv .venv
 **Windows**
 
 ```powershell
-# 1. Dependências do sistema
+# 1. System dependencies
 winget install ffmpeg
 winget install OpenJS.NodeJS.LTS
 
-# 2. Clone o repositório
+# 2. Clone the repository
 git clone https://github.com/MaykeESA/transcription-ai.git
 cd transcription-ai
 
-# 3. Crie o ambiente virtual e instale as bibliotecas
+# 3. Create the virtual environment and install the libraries
 python -m venv .venv
 .venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-> Chamar o interpretador do venv pelo caminho dispensa ativar o ambiente. Se preferir ativar para encurtar os comandos, use `source .venv/bin/activate` no Linux ou `.venv\Scripts\Activate.ps1` no PowerShell, este último exige liberar scripts uma vez com `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
+> Calling the venv interpreter by its path means you never have to activate the environment. If you prefer activating it to shorten the commands, use `source .venv/bin/activate` on Linux or `.venv\Scripts\Activate.ps1` on PowerShell, the latter requiring you to allow scripts once with `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
 
 <br>
 
-## 💻 Como usar
+## 💻 Usage
 
 **Linux**
 
 ```bash
-# Básico: só passar a URL (idioma detectado automaticamente)
+# Basic: just pass the URL (language is detected automatically)
 .venv/bin/python transcribe.py "https://www.youtube.com/watch?v=VIDEO_ID"
 
-# Forçando português
+# Forcing Portuguese
 .venv/bin/python transcribe.py "URL" -l pt
 
-# Modelo mais preciso
+# More accurate model
 .venv/bin/python transcribe.py "URL" -m medium -l pt
 
-# Vídeos longos: prioridade baixa, PC continua responsivo
+# Long videos: low priority, the machine stays responsive
 nice -n 19 .venv/bin/python transcribe.py "URL" -l pt
 ```
 
 **Windows**
 
 ```powershell
-# Básico: só passar a URL (idioma detectado automaticamente)
+# Basic: just pass the URL (language is detected automatically)
 .venv\Scripts\python.exe transcribe.py "https://www.youtube.com/watch?v=VIDEO_ID"
 
-# Forçando português
+# Forcing Portuguese
 .venv\Scripts\python.exe transcribe.py "URL" -l pt
 
-# Modelo mais preciso
+# More accurate model
 .venv\Scripts\python.exe transcribe.py "URL" -m medium -l pt
 
-# Redes onde o IPv6 está quebrado
+# Networks where IPv6 is broken
 .venv\Scripts\python.exe transcribe.py "URL" -l pt --force-ipv4
 ```
 
-O resultado fica em `transcriptions/<título do vídeo>/` com o `.mp3` e o `.txt` juntos.
+The result lands in `transcriptions/<video title>/`, with the `.mp3` and the `.txt` side by side.
 
-Todas as opções: `transcribe.py --help`
+Every option: `transcribe.py --help`
 
-| Modelo (`-m`) | Velocidade | Precisão |
+| Model (`-m`) | Speed | Accuracy |
 |---|---|---|
-| `tiny` / `base` | muito rápido | básica |
-| `small` *(padrão)* | rápido | boa |
-| `medium` | mais lento | ótima |
-| `large-v3` / `turbo` | lento / rápido | excelente (pede GPU forte) |
+| `tiny` / `base` | very fast | basic |
+| `small` *(default)* | fast | good |
+| `medium` | slower | great |
+| `large-v3` / `turbo` | slow / fast | excellent (wants a strong GPU) |
 
 <br>
 
-## 📄 Copyright e licença
+## 📄 Copyright and license
 
-Código e documentação copyright 2026 [Mayke Erick](https://github.com/MaykeESA). Código distribuído sob a [Licença MIT](LICENSE).
+Code and documentation copyright 2026 [Mayke Erick](https://github.com/MaykeESA). Code released under the [MIT License](LICENSE).
