@@ -9,7 +9,8 @@ __pycache__/
 
 # Editor / tooling
 .vscode/
-.claude/
+.claude/*
+!.claude/commands/
 
 # Misc
 *.tmp
