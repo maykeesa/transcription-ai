@@ -49,6 +49,11 @@ class YtdlpLogBuffer:
         return log_path
 
 
+def _is_transient(error: DownloadError) -> bool:
+    message = str(error).lower()
+    return any(marker in message for marker in TRANSIENT_ERROR_MARKERS)
+
+
 def download_mp3(
     url: str,
     output_dir: Path,
@@ -105,20 +110,23 @@ def download_mp3_with_retry(
     on_retry: Callable[[int, int], None] | None = None,
     force_ipv4: bool = False,
 ) -> Path:
-    for attempt in range(1, DOWNLOAD_ATTEMPTS + 1):
+    def attempt_download() -> Path:
+        return download_mp3(
+            url,
+            output_dir,
+            log_buffer=log_buffer,
+            progress_hook=progress_hook,
+            force_ipv4=force_ipv4,
+        )
+
+    for attempt in range(1, DOWNLOAD_ATTEMPTS):
         try:
-            return download_mp3(
-                url,
-                output_dir,
-                log_buffer=log_buffer,
-                progress_hook=progress_hook,
-                force_ipv4=force_ipv4,
-            )
+            return attempt_download()
         except DownloadError as error:
-            transient = any(marker in str(error).lower() for marker in TRANSIENT_ERROR_MARKERS)
-            if not transient or attempt == DOWNLOAD_ATTEMPTS:
+            if not _is_transient(error):
                 raise
             if on_retry:
                 on_retry(attempt, DOWNLOAD_ATTEMPTS)
             time.sleep(RETRY_WAIT_SECONDS)
-    raise AssertionError("unreachable")
+
+    return attempt_download()
