@@ -100,7 +100,7 @@ def format_elapsed(seconds: float) -> str:
     return f"{secs}s"
 
 
-def main() -> None:
+def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Transcribe YouTube videos with yt-dlp + Whisper.\n"
         "Downloads the audio as mp3 and writes the transcript next to it,\n"
@@ -153,7 +153,11 @@ def main() -> None:
         action="store_true",
         help="force IPv4 connections, useful when IPv6 is broken on your network (e.g. some Wi-Fi networks)",
     )
-    args = parser.parse_args()
+    return parser
+
+
+def main() -> None:
+    args = build_parser().parse_args()
     url = strip_shell_escapes(args.url)
 
     if args.force_ipv4:
