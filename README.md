@@ -123,6 +123,6 @@ Todas as opções: `transcribe.py --help`
 
 <br>
 
-## 📄 Licença
+## 📄 Copyright e licença
 
-Distribuído sob a licença [MIT](LICENSE): uso livre, inclusive comercial, desde que o aviso de copyright seja mantido. O software é fornecido sem garantias.
+Código e documentação copyright 2026 [Mayke Erick](https://github.com/MaykeESA). Código distribuído sob a [Licença MIT](LICENSE).
